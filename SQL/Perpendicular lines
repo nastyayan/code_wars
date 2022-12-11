@@ -1,0 +1,32 @@
+Link:
+https://www.codewars.com/kata/6391fe3f322221003db3bad6/solutions/sql
+
+Description:
+
+You are given an input (n) which represents the amount of lines you are given, your job is to figure out what is the maximum amount of perpendicular bisectors you can make using these lines.
+
+Note: A perpendicular bisector is one that forms a 90 degree angle
+
+n will always be greater than or equal to 0
+
+Examples with 3 and 4 lines
+https://i.imgur.com/BpssDwz.png
+
+Solution:
+
+with recursive cte(res,res1,n) as(
+    select 0::bigint,1::bigint,1::bigint
+    union all
+    select res1+res::bigint,res::bigint,n+1 from cte where n<51
+)
+select distinct fibo.n, res::bigint from cte
+join fibo using(n)
+order by n
+
+TBH, there is a simple solution but I like to do everything the hard way XD
+TB even more honest, I miscalculated and did not know there is a simple formula to use
+At least, I got to practice my CTE skills ;)
+
+Simple solution:
+
+select n, (n*n)/4 as res from perpendicular
