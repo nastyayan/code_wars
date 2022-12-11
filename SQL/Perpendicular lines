@@ -14,14 +14,18 @@ https://i.imgur.com/BpssDwz.png
 
 Solution:
 
-with recursive cte(res,res1,n) as(
-    select 0::bigint,1::bigint,1::bigint
-    union all
-    select res1+res::bigint,res::bigint,n+1 from cte where n<51
+with recursive cte(x,n) as
+(
+select 0::float, 1::float
+  union all
+select x+floor(n/2),n+1 from cte where n<50000
 )
-select distinct fibo.n, res::bigint from cte
-join fibo using(n)
-order by n
+
+select p.n, tab.x::int as res from
+(
+select n-1 as new, x from cte
+) tab
+join perpendicular p on p.n = tab.new
 
 TBH, there is a simple solution but I like to do everything the hard way XD
 TB even more honest, I miscalculated and did not know there is a simple formula to use
